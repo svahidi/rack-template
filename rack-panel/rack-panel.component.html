@@ -1,0 +1,36 @@
+<div class="rack">
+  <div class="rack-control">
+    <div class="rack-control-item" *ngFor="let slot of rackData">
+      <span class="rack-control-item-id" [style.color]="slot.status === 'used' ? '#9c9c9c' : 'white'">{{slot.id}}</span>
+      <div class="rack-control-item-border">
+        <span class="rack-control-item-border-circle"></span>
+      </div>
+      <div class="rack-control-item-unit">
+        <div *ngIf="slot.status==='available' && !this.view" class="rack-control-item-unit-hover">
+          <span (click)="addEquipment(slot)">Add Equipment</span>
+        </div>
+      </div>
+      <div class="rack-control-item-used" *ngIf="slot.unitLength" [style.height]="((slot.unitLength) * (1.25 + (0.15*2))) + 'em'">
+        <img [src]="slot.type === 'server' ? '../assets/server.svg' : '../assets/switch.svg'" width="100%" height="70" alt="Switch" draggable="false">
+        <div class="rack-control-item-used-action">
+          <span>{{slot.hardware_name}}</span>
+          <div class="rack-control-item-used-action-button" [style.maxHeight]="slot.unitLength === 2 ? '2em' : '3em'"  *ngIf="!this.view">
+            <ng-container *ngIf="slotTemplate"
+                          [ngTemplateOutlet]="slotTemplate"
+                          [ngTemplateOutletContext]="{item: slot}">
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="rack-control-item-border">
+        <span class="rack-control-item-border-circle"></span>
+      </div>
+    </div>
+  </div>
+  <div class="rack-leg">
+    <img [src]="'../assets/rack-leg.svg'">
+    <img [src]="'../assets/rack-leg.svg'">
+  </div>
+</div>
+
+
